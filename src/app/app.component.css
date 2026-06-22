@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Rye&display=swap');
+
+* {
+    font-family: 'Crimson Text', serif;
+}
+
+.app {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.app>p {
+    color: #dff099;
+    font-weight: 20px;
+    font-size: 20px;
+    text-shadow: 1px 2px 3px #111112;
+}
+
+.app>h1 {
+    color: darkorange;
+    text-shadow: 1px 2px 3px #dff099;
+    font-size: 20px;
+    font-size: 36px;
+}

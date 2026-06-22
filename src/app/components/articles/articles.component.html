@@ -1,0 +1,18 @@
+<div>
+    <div class="">
+        <ul class="list-group">
+            @for(articulo of articulos; track articulo.id){
+            <li class="list-group-item">
+                <h3>{{articulo.titulo}}</h3>
+                <p>{{articulo.descripcion}}</p>
+                <p>${{articulo.precio}}</p>
+                <p>{{articulo.categoria}}</p>
+                <p>{{disponible}}</p>
+                <p>{{articulo.ubicacion}}</p>
+                <p>{{articulo.fechaPublicacion}}</p>
+                <p>{{articulo.imagen}}</p>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
