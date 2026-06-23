@@ -38,8 +38,8 @@ export class ArticuloService {
     )
   }
 
-  listarArticulosPorUsuarioId(id: number): Observable<Articulos[]> {
-    return this.http.get<Articulos[]>(`${this.url}/usuario/${id}`);
+  listarArticulosPorUsuarioId(id: number): Observable<ApiResponse<ArticulosCategoriaDTO[]>> {
+    return this.http.get<ApiResponse<ArticulosCategoriaDTO[]>>(`${this.url}/usuario/${id}`);
   }
 
   listarArticulosDeUsuarios(): Observable<ApiResponse<ArticulosCategoriaDTO[]>> {

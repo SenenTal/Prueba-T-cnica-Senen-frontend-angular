@@ -34,7 +34,9 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
               "src/styles.css",
@@ -82,7 +84,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port":4000
+            "port": 4000
           }
         },
         "extract-i18n": {

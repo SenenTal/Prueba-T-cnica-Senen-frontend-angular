@@ -1,14 +1,41 @@
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Inicio de Sesión</h5>
-    </div>
-    <div class="card-body">
-        <form (ngSubmit)="iniciarSesion()">
-            <input name="Usuario" class="form-control my-2 w-25" placeholder="Nombre de usuario" [(ngModel)]="usuario.username">
-            <input name="Contraseña" class="form-control my-2 w-25" type="password" placeholder="Contraseña"
-                [(ngModel)]="usuario.password">
-            <button class="btn btn-primary btn-sm" type="submit">Login</button>
-
-        </form>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-3" style="width: 400px;">
+        <div class="card-header text-center bg-white">
+            <h4 class="mb-0">
+                Inicio de Sesión
+            </h4>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="iniciarSesion()">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Usuario
+                    </label>
+                    <input
+                        name="Usuario"
+                        class="form-control"
+                        placeholder="Nombre de usuario"
+                        [(ngModel)]="usuario.username">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        Contraseña
+                    </label>
+                    <input
+                        name="Contraseña"
+                        class="form-control"
+                        type="password"
+                        placeholder="Contraseña"
+                        [(ngModel)]="usuario.password">
+                </div>
+                <div class="d-grid">
+                    <button 
+                        class="btn btn-primary"
+                        type="submit">
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

@@ -7,15 +7,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { ArticlesComponent } from './components/articles/articles.component';
 import { SessionComponent } from './components/session/session.component';
+import { FormsModule } from '@angular/forms';
+import { OptionsComponent } from './components/options/options.component';
+import { ActualizarUserComponent } from './components/actualizar-user/actualizar-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ArticlesComponent,
-    SessionComponent
+    SessionComponent,
+    OptionsComponent,
+    ActualizarUserComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule

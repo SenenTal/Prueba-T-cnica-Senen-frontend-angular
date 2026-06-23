@@ -20,7 +20,7 @@ export class UsuariosService {
     return this.http.get<ApiResponse<Usuarios[]>>(`${this.url}`);
   }
 
-  obtenerUsuario(id:number):Observable<ApiResponse<Usuarios>>{
+  obtenerUsuarioPorId(id:number):Observable<ApiResponse<Usuarios>>{
     return this.http.get<ApiResponse<Usuarios>>(`${this.url}/${id}`);
   }
 
@@ -32,8 +32,8 @@ export class UsuariosService {
     return this.http.delete<ApiResponse<null>>(`${this.url}/${id}`);
   }
 
-  iniciarSesion(usuario: UserAccessDTO):Observable<ApiResponse<boolean>>{
-    return this.http.post<ApiResponse<boolean>>(`${this.url}/sesion`, usuario);
+  iniciarSesion(usuario: UserAccessDTO):Observable<ApiResponse<Usuarios>>{
+    return this.http.post<ApiResponse<Usuarios>>(`${this.url}/sesion`, usuario);
   }
 
   hacerAdmin(name: String):Observable<ApiResponse<UserAdminDTO>>{

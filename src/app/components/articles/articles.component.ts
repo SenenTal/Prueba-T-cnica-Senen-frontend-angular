@@ -24,23 +24,11 @@ export class ArticlesComponent implements OnInit{
       next:(respuesta)=>{
         this.articulos = respuesta.data;
         console.log(this.articulos);
-        let i = 0;
-        for(i=0;i<this.articulos.length;i++){
-          if(this.articulos[i].estadoArticulo === true){
-            this.disponible[i] = 'Disponible';
-          }else {
-            this.disponible[i] = 'No disponible';
-          }
-        }
       },
       error:(error)=>{
         console.log("Error al obtener articulos ",error);
       }
     });
-  }
-
-  disponiblidad(){
-
   }
 
 }

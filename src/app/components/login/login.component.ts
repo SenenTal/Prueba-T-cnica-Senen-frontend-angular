@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { UserAccessDTO } from '../../models/usuarios/usuario-access.dto';
 import { UsuariosService } from '../../services/usuarios.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,11 @@ export class LoginComponent {
     username: '',
     password: ''
   };
-  constructor(private service: UsuariosService) { }
+  nickname: string = '';
+  constructor(private service: UsuariosService,
+    private auth: AuthService,
+    private router: Router
+  ) { }
 
   iniciarSesion() {
     if (!this.usuario.username) {
@@ -32,16 +38,28 @@ export class LoginComponent {
       );
       return;
     } else {
-      this.service.iniciarSesion(this.usuario).
-      subscribe({
-        next:(user) => {
-          console.log(user);
-        },
-        error:(error)=>{
-          console.log(error);
+      this.service.iniciarSesion(this.usuario)
+        .subscribe({
+          next: (res) => {
+
+            if (res.success) {
+
+              const user = res.data;
+
+              this.auth.login(user);
+
+              this.router.navigate(['/articulos']);
+            }
+
+          },
+          error: (err) =>{ console.log(err);
+          Swal.fire(
+            'Error',
+            'Credenciales no correctas',
+            'error'
+          )
         }
-      }
-      );
+        });
     }
   }
 }

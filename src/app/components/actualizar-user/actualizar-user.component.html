@@ -1,0 +1,43 @@
+<div class="container mt-4">
+    <!-- Validación -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="mb-3">Verificación de identidad</h3>
+            <p class="text-muted">Confirma tus credenciales para modificar tu información</p>
+            <label class="form-label">Username</label>
+            <input class="form-control mb-3" name="username"
+                [(ngModel)]="userA.username">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control mb-3" name="password"
+                [(ngModel)]="userA.password">
+
+            <button class="btn btn-primary" (click)="validacion()">Verificar</button>
+        </div>
+    </div>
+
+    <!-- FORMULARIO BLOQUEADO/DESBLOQUEADO -->
+    <div 
+      class="card shadow-sm"
+      [class.opacity-50]="!formularioActualizacion">
+
+        <div class="card-body">
+            <h3>Actualizar datos</h3>
+
+            <fieldset [disabled]="!formularioActualizacion">
+                <label class="form-label">Nuevo username
+                </label>
+                <input class="form-control mb-2" [(ngModel)]="userU.usuario">
+
+                <label class="form-label">Nuevo nickname</label>
+
+                <input class="form-control mb-2" [(ngModel)]="userU.nickname">
+
+                <label class="form-label">Nueva contraseña</label>
+
+                <input type="password" class="form-control mb-3" [(ngModel)]="userU.password">
+
+                <button class="btn btn-success" (click)="actualizarUsuario()">Guardar cambios</button>
+            </fieldset>
+        </div>
+    </div>
+</div>

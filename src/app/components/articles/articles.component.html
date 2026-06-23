@@ -1,18 +1,76 @@
-<div>
-    <div class="">
-        <ul class="list-group">
-            @for(articulo of articulos; track articulo.id){
-            <li class="list-group-item">
-                <h3>{{articulo.titulo}}</h3>
-                <p>{{articulo.descripcion}}</p>
-                <p>${{articulo.precio}}</p>
-                <p>{{articulo.categoria}}</p>
-                <p>{{disponible}}</p>
-                <p>{{articulo.ubicacion}}</p>
-                <p>{{articulo.fechaPublicacion}}</p>
-                <p>{{articulo.imagen}}</p>
-            </li>
-            }
-        </ul>
+<app-session />
+<div class="container mt-4">
+    <h2 class="mb-4">Productos Disponibles</h2>
+    <div class="row g-4">
+
+        @for(articulo of articulos; track articulo.idArticulo) {
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm">
+
+                    <!-- Imagen -->
+                    <img 
+                        [src]="articulo.imagen"
+                        class="card-img-top"
+                        style="height: 200px; object-fit: contain;"
+                        alt="Producto">
+
+                    <!-- Contenido -->
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- Categoria -->
+                        <span class="badge bg-secondary mb-2">
+                            {{articulo.categoria}}
+                        </span>
+
+                        <!-- Titulo -->
+                        <h5 class="card-title">
+                            {{articulo.titulo}}
+                        </h5>
+
+                        <!-- Descripción -->
+                        <p class="card-text text-muted">
+                            {{articulo.descripcion}}
+                        </p>
+
+                        <!-- Precio -->
+                        <p class="text-success">
+                            ${{articulo.precio}}
+                        </p>
+
+                        <!-- Estado -->
+                        @if(articulo.estadoArticulo) {
+                            <p class="text-success">
+                                Disponible
+                            </p>
+                        } @else {
+                            <p class="text-danger">
+                                No disponible
+                            </p>
+                        }
+
+                        <!-- Ubicación -->
+                        <p class="text-muted">
+                            {{articulo.ubicacion}}
+                        </p>
+
+                        <!-- Fecha -->
+                        <small class="text-muted mb-3">
+                            {{articulo.fechaPublicacion}}
+                        </small>
+
+                        <button class="btn btn-primary mt-auto" >
+                            Ver producto
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+
     </div>
+
 </div>
