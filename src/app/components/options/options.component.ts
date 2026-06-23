@@ -14,8 +14,14 @@ import Swal from 'sweetalert2';
 })
 export class OptionsComponent implements OnInit {
   id: number;
-  user: Usuarios;
-  articulos: ArticulosCategoriaDTO[];
+  user: Usuarios = {
+    id: 0,
+    usuario: '',
+    nickname: '',
+    role: '',
+    password: ''
+  };
+  articulos: ArticulosCategoriaDTO[] = [];
 
   constructor(private usuariosService: UsuariosService,
     private route: ActivatedRoute,
@@ -24,26 +30,25 @@ export class OptionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.obtenerCredenciales(this.id);
+    this.obtenerCredenciales();
+    this.obtenerArticulos();
   }
 
-  obtenerCredenciales(id: number) {
+  obtenerCredenciales() {
     this.usuariosService.obtenerUsuarioPorId(this.id)
       .subscribe({
         next: (res) => {
           console.log(res.data);
           //obtenemos los datos para el usuario
+          this.user = res.data;
           this.user.id = this.id;
-          this.user.usuario = res.data.usuario;
-          this.user.nickname = res.data.nickname;
-          this.user.role = res.data.role;
         }, error: (error) => {
           console.log(error);
         }
       });
   }
 
-  obtenerArticulos(id: number) {
+  obtenerArticulos() {
     this.articulosService.listarArticulosPorUsuarioId(this.id)
       .subscribe({
         next: (resp) => {
