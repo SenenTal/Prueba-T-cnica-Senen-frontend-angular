@@ -23,22 +23,22 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Título</label>
-                            <input class="form-control" [(ngModel)]="articulo.titulo">
+                            <input class="form-control" [(ngModel)]="articuloU.titulo">
                         </div>
                         <div class="mb-3">
                             <label class="form-label"> Descripción</label>
-                            <textarea class="form-control" rows="4" [(ngModel)]="articulo.descripcion">
+                            <textarea class="form-control" rows="4" [(ngModel)]="articuloU.descripcion">
                         </textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Precio</label>
-                                <input type="number" class="form-control" [(ngModel)]="articulo.precio">
+                                <input type="number" class="form-control" [(ngModel)]="articuloU.precio">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Categoría</label>
 
-                                <select class="form-select" [(ngModel)]="articulo.categoria">
+                                <select class="form-select" [(ngModel)]="articuloU.categoria">
 
                                     <option value="">Seleccione una categoría</option>
                                     <option value="Autos y Transporte">Autos y Transporte</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label"> Ubicación</label>
-                            <select class="form-select" [(ngModel)]="articulo.ubicacion">
+                            <select class="form-select" [(ngModel)]="articuloU.ubicacion">
                                 <option value="Culiacan, Sinaloa">Culiacan, Sinaloa</option>
                                 <option value="Mazatlan, Sinaloa">Mazatlan, Sinaloa</option>
                                 <option value="Guamuchil, Sinaloa">Guamuchil, Sinaloa</option>
@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" [(ngModel)]="articulo.estadoArticulo">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="articuloU.estadoArticulo">
                             <label class="form-check-label">Disponible</label>
                         </div>
 

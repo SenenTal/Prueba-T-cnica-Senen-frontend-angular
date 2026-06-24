@@ -14,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class UpdateArticleComponent implements OnInit {
 
-  imagenFile!: File;
+  imagenFile: File | null = null;
   imagenPreview: string = '';
   idArticulo!: number;
   idUsuario!: number;
@@ -109,9 +109,10 @@ export class UpdateArticleComponent implements OnInit {
 
 
   actualizarArticulo() {
-    // asegurar usuario
+    console.log("DTO:", this.articuloU);
+    console.log("Imagen:", this.imagenFile);
     this.articuloU.idUsuario = this.idUsuario;
-    if (!this.imagenFile) {
+    if (!this.imagenFile || this.imagenFile === undefined) {
       this.service.actualizarArticulo1(
         this.idArticulo,
         this.articuloU
@@ -124,9 +125,12 @@ export class UpdateArticleComponent implements OnInit {
               'success'
             );
             this.irAOpciones();
+          },error:(error)=>{
+            Swal.fire('Error',`${error.error.message}` || 'Error desconocido','error');
           }
         });
     } else {
+      console.log(this.articuloU);
       this.service.actualizarArticulo2(
         this.idArticulo,
         this.articuloU,
@@ -159,16 +163,19 @@ export class UpdateArticleComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const archivo= event.target.files[0];
-    if(!archivo){
+    const archivo = event.target.files[0];
+    if (!archivo) {
       return;
     }
     this.imagenFile = archivo;
     const reader = new FileReader();
-    reader.onload=()=>{
+    reader.onload = () => {
       this.imagenPreview = reader.result as string;
     };
     reader.readAsDataURL(archivo);
+  }
+  test() {
+    console.log(this.articuloU);
   }
 
 }
