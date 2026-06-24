@@ -14,7 +14,13 @@ import { UserAccessDTO } from '../../models/usuarios/usuario-access.dto';
 })
 export class ActualizarUserComponent implements OnInit {
   id: number;
-  user: Usuarios;
+  user: Usuarios = {
+    id: 0,
+    user: '',
+    nickname: '',
+    password: '',
+    role: ''
+  };
   userU: UserDTO = {
     usuario: '',
     password: '',
@@ -40,11 +46,12 @@ export class ActualizarUserComponent implements OnInit {
     this.usuariosService.obtenerUsuarioPorId(this.id)
       .subscribe({
         next: (resp) => {
-          this.user.id = resp.data.id;
-          this.user.usuario = resp.data.usuario;
-          this.user.role = resp.data.role;
-          this.user.nickname = resp.data.nickname;
-          this.user.password = resp.data.password;
+          this.user = resp.data;
+          // Datos para mostrar en el formulario de actualización
+          this.userU.usuario = this.user.user;
+          // this.userU.nickname = this.user.nickname;
+
+          console.log(`Credenciales cargadas: ${this.userA.username}, ${this.userA.password}`);
         }, error: (error) => {
           console.log(error);
         }
@@ -53,12 +60,13 @@ export class ActualizarUserComponent implements OnInit {
 
   //Llamar a actualizar usuario
   actualizarUsuario() {
-    this.usuariosService.actualizarUsuario(this.userU).
+    console.log(`${this.userU.usuario}, ${this.userU.nickname}, ${this.userU.password}`);
+    this.usuariosService.actualizarUsuario(this.userU, this.user.id).
       subscribe({
         next: (resp) => {
           Swal.fire(
             'Success',
-            `Usuario Actualizado: ${resp.data.usuario}`,
+            `Usuario Actualizado: ${this.userU.usuario}`,
             'success'
           )
           this.router.navigate(['/articulos']);
@@ -77,9 +85,8 @@ export class ActualizarUserComponent implements OnInit {
   //Validar credenciales antes de hacer aparecer la pantalla de modificar datos
   //de usuarios
   validacion() {
-    this.userA.username = this.user.usuario;
-    this.userA.password = this.user.password;
-    if (!this.userA.username || this.userA.password) {
+    console.log(`${this.userA.username} y ${this.userA.password}`)
+    if (!this.userA.username || !this.userA.password) {
       Swal.fire(
         'Notificación',
         'Escriba datos correctos',
@@ -124,7 +131,7 @@ export class ActualizarUserComponent implements OnInit {
     this.userA.username = '';
   }
 
-  vaciarFormularioActualizaciones(){
+  vaciarFormularioActualizaciones() {
     this.userU.password = '';
     this.userU.nickname = '';
     this.userU.usuario = '';

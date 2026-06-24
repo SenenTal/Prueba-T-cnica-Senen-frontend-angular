@@ -1,0 +1,79 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-start mb-3">
+        <button class="btn btn-outline-secondary" (click)="irAOpciones()">
+            <img src="assets/icons/settings-svgrepo-com.svg" width="20" height="20">
+            Volver a Opciones</button>
+    </div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="mb-4">Modificar artículo</h3>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Imagen del artículo
+                            </label>
+                            <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)">
+                        </div>
+                        <!-- Preview imagen -->
+                        <div class="text-center mb-3" *ngIf="imagenPreview">
+                            <img [src]="imageUrl + imagenPreview" class="img-thumbnail"
+                                style="width:250px;height:250px;object-fit:contain;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Título</label>
+                            <input class="form-control" [(ngModel)]="articulo.titulo">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Descripción</label>
+                            <textarea class="form-control" rows="4" [(ngModel)]="articulo.descripcion">
+                        </textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Precio</label>
+                                <input type="number" class="form-control" [(ngModel)]="articulo.precio">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Categoría</label>
+
+                                <select class="form-select" [(ngModel)]="articulo.categoria">
+
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="Autos y Transporte">Autos y Transporte</option>
+                                    <option value="Ropa">Ropa</option>
+                                    <option value="Ropa Deportiva">Ropa Deportiva</option>
+                                    <option value="Figuras y Coleccionables">Figuras y Coleccionables</option>
+                                    <option value="Musica">Música</option>
+                                    <option value="Juguetes">Juguetes</option>
+                                    <option value="Herramientas">Herramientas</option>
+                                    <option value="Electronica">Electronica</option>
+                                    <option value="Muebles">Muebles</option>
+                                    <option value="Consolas y Videojuegos">Consolas y Videojuegos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Ubicación</label>
+                            <select class="form-select" [(ngModel)]="articulo.ubicacion">
+                                <option value="Culiacan, Sinaloa">Culiacan, Sinaloa</option>
+                                <option value="Mazatlan, Sinaloa">Mazatlan, Sinaloa</option>
+                                <option value="Guamuchil, Sinaloa">Guamuchil, Sinaloa</option>
+                                <option value="Guasave, Sinaloa">Guasave, Sinaloa</option>
+                                <option value="Los Mochis, Sinaloa">Los Mochis, Sinaloa</option>
+                                <option value="Angostura, Sinaloa">Angostura, Sinaloa</option>
+                                <option value="Pericos, Sinaloa">Pericos, Sinaloa</option>
+                            </select>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="articulo.estadoArticulo">
+                            <label class="form-check-label">Disponible</label>
+                        </div>
+
+                        <button class="btn btn-success w-100" (click)="actualizarArticulo()">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

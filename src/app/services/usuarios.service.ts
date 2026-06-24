@@ -44,7 +44,7 @@ export class UsuariosService {
     return this.http.put<ApiResponse<UserAdminDTO>>(`${this.url}/user/${name}`, null);
   }
 
-  actualizarUsuario(usuario: UserDTO):Observable<ApiResponse<Usuarios>>{
-    return this.http.put<ApiResponse<Usuarios>>(`${this.url}`, usuario);
+  actualizarUsuario(usuario: UserDTO, id:number):Observable<ApiResponse<Usuarios>>{
+    return this.http.put<ApiResponse<Usuarios>>(`${this.url}/${id}`, usuario);
   }
 }

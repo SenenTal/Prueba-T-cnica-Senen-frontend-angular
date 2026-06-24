@@ -16,7 +16,7 @@ export class OptionsComponent implements OnInit {
   id: number;
   user: Usuarios = {
     id: 0,
-    usuario: '',
+    user: '',
     nickname: '',
     role: '',
     password: ''
@@ -55,7 +55,7 @@ export class OptionsComponent implements OnInit {
           this.articulos = resp.data;
         }
         , error: (error) => {
-          console.log(`Error: ${error}`)
+          console.log(`Error: ${error.error.message}`)
         }
       })
   }
@@ -83,7 +83,7 @@ export class OptionsComponent implements OnInit {
             }, error: (error) => {
               Swal.fire(
                 'Error',
-                'No se pudo eliminar',
+                `${error.error?.message}` || 'Error desconocido',
                 'error'
               );
               console.log(`Error al eliminar: ${error}`);
@@ -93,7 +93,34 @@ export class OptionsComponent implements OnInit {
   }
 
   actualizarUsuario() {
-    this.router.navigate(['/actualizar', this.id]);
+    this.router.navigate(['/actualizarUsuario', this.id]);
   }
 
+  modificarArticulo(id: number) {
+    this.router.navigate(['/actualizarArticulo', id]);
+  }
+
+  eliminarArticulo(id: number) {
+    Swal.fire({
+      title: '¿Esta seguro?',
+      text: 'Seguro que quiere eliminar:  ',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.articulosService.eliminarArticulo(id).subscribe({
+          next: (resp) => {
+            Swal.fire('Borrado', `${resp.message}`, 'success');
+            return;
+          }, error: (error) => {
+            Swal.fire('Error', `${error.error.message}` || 'Error desconocido', 'error');
+            return;
+          }
+        })
+      }
+    })
+
+  }
 }

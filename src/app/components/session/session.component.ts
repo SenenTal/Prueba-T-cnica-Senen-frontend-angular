@@ -47,5 +47,16 @@ export class SessionComponent implements OnInit {
     }
     this.router.navigate(['/opciones', id]);
   }
+  crearArticulo(){
+    const id = this.auth.getUserId();
+    if(id === null || id === undefined){
+      console.log('No hay usuario inicializado');
+      return;
+    }
+    this.router.navigate(['/crearArticulo', id]);
+  }
+  crearUsuario(){
+    this.router.navigate(['/crearUsuario']);
+  }
 
 }

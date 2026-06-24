@@ -5,22 +5,36 @@
       <img src="assets/icons/market-store-shop-winter-svgrepo-com.svg" width="35" height="35">
       <span class="fw-bold">Marketplace</span>
     </a>
-
-    <!--Parte derecha-->
-    <div class="d-flex align-items-center gap-3">
-
-      <button *ngIf="!sesion" type="button" class="btn btn-primary" (click)="iniciarSesion()">
-        Iniciar Sesion
+    <!--Parte izquierda: botones-->
+    <div class="d-flex align-items-center gap-2 ms-3">
+      <button class="btn btn-info btn-sm" *ngIf="sesion" (click)="crearArticulo()">
+        Crear Articulo
       </button>
+    </div>
+    <div>
+      <button class="btn btn-outline-primary btn-sm" *ngIf="!sesion" 
+      (click)="crearUsuario()">Crear un usuario</button>
+    </div>
 
+    <!--Seperador automático derecha-->
+    <div class="ms-auto d-flex align-items-center gap-3">
+
+      <!--No logueado-->
+      <ng-container *ngIf="!sesion">
+        <button *ngIf="!sesion" type="button" class="btn btn-primary" (click)="iniciarSesion()">
+          Iniciar Sesion
+        </button>
+      </ng-container>
+
+      <!--Logueado-->
       <ng-container *ngIf="sesion">
         <div class="d-flex align-items-center gap-2">
           <img src="assets/icons/user-svgrepo-com.svg" width="30" height="30" class="rounded-circle">
           <span class="fw-semibold">{{nickname}}</span>
         </div>
-        <button *ngIf="sesion" class="btn btn-outline-secondary btn-sm" (click)="irAOpciones()">
+        <button class="btn btn-outline-secondary btn-sm" (click)="irAOpciones()">
           <img src="assets/icons/settings-svgrepo-com.svg" width="20" height="20"></button>
-        <button *ngIf="sesion" type="button" class="btn btn-danger btn-sm" (click)="cerrarSesion()">
+        <button type="button" class="btn btn-danger btn-sm" (click)="cerrarSesion()">
           Cerrar Sesion
         </button>
       </ng-container>

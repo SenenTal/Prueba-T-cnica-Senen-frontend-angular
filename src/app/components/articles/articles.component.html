@@ -1,72 +1,98 @@
 <app-session />
 <div class="container mt-4">
+    <!--Filtros-->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <!--Buscar por titulo-->
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold">Buscar por Titulo</label>
+                    <input type="text" class="form-control" placeholder="Escriba" 
+                    [(ngModel)]="filtroTitulo" (input)="listarPorTitulo()">
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">Categoria</label>
+                    <select class="form-select" [(ngModel)]="filtroCategoria"
+                    name="categoria" (change)="listarPorCategoria()">
+                        <option value="">Seleccione una categoría</option>
+                        <option value="Autos y Transporte">Autos y Transporte</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Ropa Deportiva">Ropa Deportiva</option>
+                        <option value="Figuras y Coleccionables">Figuras y Coleccionables</option>
+                        <option value="Musica">Música</option>
+                        <option value="Juguetes">Juguetes</option>
+                        <option value="Herramientas">Herramientas</option>
+                        <option value="Electronica">Electronica</option>
+                        <option value="Muebles">Muebles</option>
+                        <option value="Consolas y Videojuegos">Consolas y Videojuegos</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
     <h2 class="mb-4">Productos Disponibles</h2>
     <div class="row g-4">
 
         @for(articulo of articulos; track articulo.idArticulo) {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card h-100 shadow-sm">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <!-- Imagen -->
+                <img [src]="imageUrl + articulo.imagen" class="card-img-top" style="height: 200px; object-fit: contain;"
+                    alt="Producto">
 
-                    <!-- Imagen -->
-                    <img 
-                        [src]="articulo.imagen"
-                        class="card-img-top"
-                        style="height: 200px; object-fit: contain;"
-                        alt="Producto">
+                <!-- Contenido -->
+                <div class="card-body d-flex flex-column">
 
-                    <!-- Contenido -->
-                    <div class="card-body d-flex flex-column">
+                    <!-- Categoria -->
+                    <span class="badge bg-secondary mb-2">
+                        {{articulo.categoria}}
+                    </span>
 
-                        <!-- Categoria -->
-                        <span class="badge bg-secondary mb-2">
-                            {{articulo.categoria}}
-                        </span>
+                    <!-- Titulo -->
+                    <h5 class="card-title">
+                        {{articulo.titulo}}
+                    </h5>
 
-                        <!-- Titulo -->
-                        <h5 class="card-title">
-                            {{articulo.titulo}}
-                        </h5>
+                    <!-- Descripción -->
+                    <p class="card-text text-muted">
+                        {{articulo.descripcion}}
+                    </p>
 
-                        <!-- Descripción -->
-                        <p class="card-text text-muted">
-                            {{articulo.descripcion}}
-                        </p>
+                    <!-- Precio -->
+                    <p class="text-success">
+                        ${{articulo.precio}}
+                    </p>
 
-                        <!-- Precio -->
-                        <p class="text-success">
-                            ${{articulo.precio}}
-                        </p>
+                    <!-- Estado -->
+                    @if(articulo.estadoArticulo) {
+                    <p class="text-success">
+                        Disponible
+                    </p>
+                    } @else {
+                    <p class="text-danger">
+                        No disponible
+                    </p>
+                    }
 
-                        <!-- Estado -->
-                        @if(articulo.estadoArticulo) {
-                            <p class="text-success">
-                                Disponible
-                            </p>
-                        } @else {
-                            <p class="text-danger">
-                                No disponible
-                            </p>
-                        }
+                    <!-- Ubicación -->
+                    <p class="text-muted">
+                        {{articulo.ubicacion}}
+                    </p>
 
-                        <!-- Ubicación -->
-                        <p class="text-muted">
-                            {{articulo.ubicacion}}
-                        </p>
+                    <!-- Fecha -->
+                    <small class="text-muted mb-3">
+                        {{articulo.fechaPublicacion | date:'dd/MM/yyyy'}}
+                    </small>
 
-                        <!-- Fecha -->
-                        <small class="text-muted mb-3">
-                            {{articulo.fechaPublicacion}}
-                        </small>
-
-                        <button class="btn btn-primary mt-auto" >
-                            Ver producto
-                        </button>
-
-                    </div>
+                    <button class="btn btn-primary mt-auto" (click)="verArticulo(articulo.idArticulo)">
+                        Ver producto
+                    </button>
 
                 </div>
 
             </div>
+
+        </div>
 
         }
 

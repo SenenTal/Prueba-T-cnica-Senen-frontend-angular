@@ -1,0 +1,77 @@
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-start mb-3">
+    <button class="btn btn-outline-secondary" routerLink="/articulos">
+        Volver a Articulos
+    </button>
+</div>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h3 class="text-center mb-4">
+            Crear usuario
+          </h3>
+          <!-- Username -->
+          <div class="mb-3">
+            <label class="form-label">
+              Usuario
+            </label>
+            <input 
+              type="text"
+              class="form-control"
+              placeholder="Ingresa tu usuario"
+              [(ngModel)]="user.usuario"
+              name="usuario">
+          </div>
+          <!-- Nickname -->
+          <div class="mb-3">
+            <label class="form-label">Nickname</label>
+            <input type="text" class="form-control"
+              placeholder="Ej: SenenDev" [(ngModel)]="user.nickname"
+              name="nickname">
+          </div>
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+
+            <input type="password" class="form-control"
+            placeholder="Insertar su contraseña" [(ngModel)]="user.password"
+              name="password">
+          </div>
+          <!-- Role (opcional oculto o fijo) -->
+          <!-- <div class="mb-3">
+            <label class="form-label">
+              Rol
+            </label>
+
+            <select 
+              class="form-select"
+              [(ngModel)]="user.role"
+              name="role">
+
+              <option value="USER">
+                Usuario
+              </option>
+
+              <option value="ADMIN">
+                Administrador
+              </option>
+
+            </select>
+
+          </div> -->
+
+          <!-- Botón -->
+          <div class="d-grid">
+            <button 
+              class="btn btn-primary" (click)="crearUsuario()">
+              Crear cuenta
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

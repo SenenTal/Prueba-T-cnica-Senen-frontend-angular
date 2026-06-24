@@ -6,6 +6,7 @@ import { ApiResponse } from '../models/response/apiResponse';
 import { ArticulosCategoriaDTO } from '../models/articulos/articulos-categoria.dto';
 import { ModificarArticulo1DTO } from '../models/articulos/modificar-articulo1.dto';
 import { ModificarArticulo2DTO } from '../models/articulos/modificar-articulo2.dto';
+import { InsertarArticuloDTO } from '../models/articulos/insertar-articulos.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,16 @@ export class ArticuloService {
 
   }
 
-  crearArticulo(articulo: Articulos): Observable<ApiResponse<Articulos>> {
+  crearArticulo(articulo: InsertarArticuloDTO, imagen: File): Observable<ApiResponse<Articulos>> {
+    const formData = new FormData();
+
+    formData.append("newArticulo", new Blob([JSON.stringify(articulo)],{
+      type: "application/json"
+    }));
+    formData.append("imagen", imagen);
     return this.http.post<ApiResponse<Articulos>>(
       this.url,
-      articulo
+      formData
     );
   }
 
@@ -62,8 +69,13 @@ export class ArticuloService {
     return this.http.put<ApiResponse<ArticulosCategoriaDTO>>(`${this.url}/1/${id}`, articulo);
   }
 
-  actualizarArticulo2(id:number, articulo: ModificarArticulo2DTO): Observable<ApiResponse<ArticulosCategoriaDTO>>{
-    return this.http.put<ApiResponse<ArticulosCategoriaDTO>>(`${this.url}/1/${id}`, articulo);
+  actualizarArticulo2(id:number, articulo: ModificarArticulo1DTO, imagen: File): Observable<ApiResponse<ArticulosCategoriaDTO>>{
+    const formData = new FormData();
+    //DTO como JSON dentro de FormData
+    formData.append('articulo', new Blob([JSON.stringify(articulo)], {type: 'application/json'}));
+    //archivo
+    formData.append('imagen', imagen);
+    return this.http.put<ApiResponse<ArticulosCategoriaDTO>>(`${this.url}/2/${id}`, formData);
   }
 
   obtenerArticulosDelUsuario(id: number): Observable<ApiResponse<ArticulosCategoriaDTO[]>>{

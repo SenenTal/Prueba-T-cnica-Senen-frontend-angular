@@ -10,6 +10,10 @@ import { SessionComponent } from './components/session/session.component';
 import { FormsModule } from '@angular/forms';
 import { OptionsComponent } from './components/options/options.component';
 import { ActualizarUserComponent } from './components/actualizar-user/actualizar-user.component';
+import { ArticlesDetailComponent } from './components/articles-detail/articles-detail.component';
+import { CreateArticleComponent } from './components/create-article/create-article.component';
+import { UpdateArticleComponent } from './components/update-article/update-article.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import { ActualizarUserComponent } from './components/actualizar-user/actualizar
     ArticlesComponent,
     SessionComponent,
     OptionsComponent,
-    ActualizarUserComponent
+    ActualizarUserComponent,
+    ArticlesDetailComponent,
+    CreateArticleComponent,
+    UpdateArticleComponent,
+    CreateUserComponent
   ],
   imports: [
     FormsModule,
