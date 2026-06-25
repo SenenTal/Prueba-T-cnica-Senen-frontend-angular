@@ -36,14 +36,14 @@ export class UpdateArticleComponent implements OnInit {
   articuloU: ModificarArticulo1DTO = {
     idUsuario: 0,
     titulo: '',
-    estadoArticulo: false,
+    estadoArticulo: null,
     precio: 0,
     categoria: '',
     ubicacion: '',
     descripcion: ''
   };
 
-
+estadoDisponible: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private service: ArticuloService,
@@ -95,6 +95,7 @@ export class UpdateArticleComponent implements OnInit {
             estadoArticulo: this.articulo.estadoArticulo,
             ubicacion: this.articulo.ubicacion
           };
+          this.estadoDisponible = this.articulo.estadoArticulo;
         },
         error: (error) => {
           Swal.fire(
@@ -125,8 +126,8 @@ export class UpdateArticleComponent implements OnInit {
               'success'
             );
             this.irAOpciones();
-          },error:(error)=>{
-            Swal.fire('Error',`${error.error.message}` || 'Error desconocido','error');
+          }, error: (error) => {
+            Swal.fire('Error', `${error.error.message}` || 'Error desconocido', 'error');
           }
         });
     } else {
@@ -167,15 +168,29 @@ export class UpdateArticleComponent implements OnInit {
     if (!archivo) {
       return;
     }
+
     this.imagenFile = archivo;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagenPreview = reader.result as string;
-    };
-    reader.readAsDataURL(archivo);
+
+    this.imagenPreview = URL.createObjectURL(archivo);
   }
   test() {
     console.log(this.articuloU);
+  }
+  regresarImagen() {
+    if (this.imagenPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(this.imagenPreview);
+    }
+
+    this.imagenPreview = this.articulo.imagen;
+    this.imagenFile = null;
+  }
+  cambiarEstado(event: any) {
+    this.estadoDisponible = event.target.checked;
+    if (this.estadoDisponible) {
+      this.articuloU.estadoArticulo = true;
+    } else if(!this.estadoDisponible) {
+      this.articuloU.estadoArticulo = null;
+    }
   }
 
 }

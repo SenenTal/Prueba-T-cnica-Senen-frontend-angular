@@ -7,6 +7,8 @@ import { ArticulosCategoriaDTO } from '../models/articulos/articulos-categoria.d
 import { ModificarArticulo1DTO } from '../models/articulos/modificar-articulo1.dto';
 import { ModificarArticulo2DTO } from '../models/articulos/modificar-articulo2.dto';
 import { InsertarArticuloDTO } from '../models/articulos/insertar-articulos.dto';
+import { ArticulosUsuariosDTO } from '../models/articulos/articulos-usuarios.dto';
+import { ArticulosDTO } from '../models/articulos/articulos.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +55,8 @@ export class ArticuloService {
     return this.http.get<ApiResponse<ArticulosCategoriaDTO[]>>(`${this.url}/usuarios`);
   }
 
-  articuloPorId(id: number): Observable<ApiResponse<ArticulosCategoriaDTO>> {
-    return this.http.get<ApiResponse<ArticulosCategoriaDTO>>(`${this.url}/${id}`);
+  articuloPorId(id: number): Observable<ApiResponse<ArticulosDTO>> {
+    return this.http.get<ApiResponse<ArticulosDTO>>(`${this.url}/${id}`);
   }
 
   buscarArticulosPorTitulo(titulo: string): Observable<ApiResponse<ArticulosCategoriaDTO[]>>{
@@ -80,5 +82,9 @@ export class ArticuloService {
 
   obtenerArticulosDelUsuario(id: number): Observable<ApiResponse<ArticulosCategoriaDTO[]>>{
     return this.http.get<ApiResponse<ArticulosCategoriaDTO[]>>(`${this.url}/usuario/${id}`);
+  }
+
+  obtenerArticulosVendidosPorUsuario(id:number): Observable<ApiResponse<ArticulosUsuariosDTO[]>>{
+    return this.http.get<ApiResponse<ArticulosUsuariosDTO[]>>(`${this.url}/usuarios/vendidos/${id}`);
   }
 }

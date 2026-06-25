@@ -5,6 +5,7 @@ import { ArticulosCategoriaDTO } from '../../models/articulos/articulos-categori
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { VentasService } from '../../services/ventas.service';
+import { ArticulosDTO } from '../../models/articulos/articulos.dto';
 
 @Component({
   selector: 'app-articles-detail',
@@ -13,9 +14,10 @@ import { VentasService } from '../../services/ventas.service';
   styleUrl: './articles-detail.component.css'
 })
 export class ArticlesDetailComponent implements OnInit {
+  idUsuario!: number;
   sesion: boolean = false;
   idArticulo!: number;
-  articulos: ArticulosCategoriaDTO = {
+  articulo: ArticulosDTO = {
     idArticulo: 0,
     titulo: '',
     descripcion: '',
@@ -24,10 +26,13 @@ export class ArticlesDetailComponent implements OnInit {
     estadoArticulo: false,
     ubicacion: '',
     fechaPublicacion: new Date,
-    imagen: ''
+    imagen: '',
+    idUsuario: 0
   }
+  articulosUsuario: ArticulosDTO[] = [];
   imageUrl = 'http://localhost:8001/imagenes'
   imagen: string = '';
+  esPropietario: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private articuloService: ArticuloService,
@@ -40,6 +45,7 @@ export class ArticlesDetailComponent implements OnInit {
     this.auth.sesion$.subscribe(valor => {
       this.sesion = valor;
     })
+    this.idUsuario = this.auth.getUserId();
     this.route.paramMap.subscribe(params => {
       this.idArticulo = Number(params.get('id'));
       this.llamarArticulo();
@@ -49,8 +55,11 @@ export class ArticlesDetailComponent implements OnInit {
   llamarArticulo() {
     this.articuloService.articuloPorId(this.idArticulo).subscribe({
       next: (resp) => {
-        this.articulos = resp.data;
-        this.imagen = `${this.imageUrl}/${this.articulos.imagen}`
+        this.articulo = resp.data;
+        this.imagen = `${this.imageUrl}/${this.articulo.imagen}`
+        //Comparar si el id del usuario es igual a id_usuario de articulo
+        this.esPropietario = this.articulo.idUsuario === this.idUsuario;
+        console.log(`${this.articulo}`);
       }, error: (error) => {
         Swal.fire(
           'Fallo de conexión',
@@ -62,8 +71,8 @@ export class ArticlesDetailComponent implements OnInit {
   }
   //Para comprar producto
   comprarProducto() {
-    const idUsuario = this.auth.getUserId();
-    if (!idUsuario) {
+    if (!this.idUsuario) {
+      Swal.fire('Error', 'Debes iniciar sesión', 'error');
       return;
     } else {
       this.ventasService.crearVenta(this.idArticulo).subscribe(
@@ -79,4 +88,12 @@ export class ArticlesDetailComponent implements OnInit {
       )
     }
   }
+
+  //Función para validar si el usuario le pertenece la publicación
+  //Para deshabilitar el botón comprar (no puede comprar su propio articulo)
+  // verificarUsuario() {
+  //   if(this.idUsuario === this.articulo.idUsuario){
+  //     this.esPropietario = true
+  //   }
+  // }
 }

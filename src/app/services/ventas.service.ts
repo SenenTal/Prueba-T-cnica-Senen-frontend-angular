@@ -31,4 +31,5 @@ export class VentasService {
     return this.http.get<ApiResponse<TotalDTO>>(`${this.url}/ganancias/${id}`)
   }
 
+
 }

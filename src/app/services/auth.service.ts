@@ -60,5 +60,9 @@ export class AuthService {
   getUserId() {
     return this.userSubject.value?.id ?? null;
   }
+  setUser(user:any){
+    this.userSubject.next(user);
+    localStorage.setItem('user',JSON.stringify(user));
+  }
 
 }

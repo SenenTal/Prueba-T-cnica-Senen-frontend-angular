@@ -4,6 +4,6 @@ export interface ModificarArticulo1DTO{
     descripcion: string;
     precio: number;
     categoria: string;
-    estadoArticulo: boolean;
+    estadoArticulo: boolean | null;
     ubicacion: string;
 }

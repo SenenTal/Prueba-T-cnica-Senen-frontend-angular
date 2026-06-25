@@ -26,7 +26,7 @@ export class CreateUserComponent {
     if (!this.user.usuario ||
       !this.user.nickname ||
       !this.user.password) {
-      Swal.fire('Error', 'Falta por reelnar los campos', 'info');
+      Swal.fire('Error', 'Falta por rellenar los campos', 'info');
     } else if (this.user.password.length <= 4) {
       Swal.fire('info', 'Contraseña pequeña, escriba mas de 4 caracteres', 'info');
     } else if (this.user.usuario.length <= 4) {

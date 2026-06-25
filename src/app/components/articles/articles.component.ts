@@ -12,6 +12,10 @@ import Swal from 'sweetalert2';
 })
 export class ArticlesComponent implements OnInit {
 
+  page = 1;
+  size = 8;
+  totalPages = 0;
+  articulosFiltrados: ArticulosCategoriaDTO[] = [];
   articulos: ArticulosCategoriaDTO[] = [];
   disponible: string[] = [];
   imageUrl = "http://localhost:8001/imagenes/";
@@ -30,6 +34,7 @@ export class ArticlesComponent implements OnInit {
       next: (respuesta) => {
         this.articulos = respuesta.data;
         console.log(this.articulos);
+        this.aplicarPaginacion();
       },
       error: (error) => {
         console.log("Error al obtener articulos ", error.error.message);
@@ -44,14 +49,16 @@ export class ArticlesComponent implements OnInit {
 
   listarPorTitulo() {
     //Filtrar los espacios en titulo
-    if(this.filtroTitulo.trim() === ''){
-    this.listarArticulos(); // volver a todos
-    return;
-  }
+    if (this.filtroTitulo.trim() === '') {
+      this.listarArticulos(); // volver a todos
+      return;
+    }
     this.service.buscarArticulosPorTitulo(this.filtroTitulo).subscribe({
       next: (resp) => {
         this.articulos = resp.data;
         console.log(this.articulos);
+        this.page = 1;
+        this.aplicarPaginacion();
       }, error: (error) => {
         Swal.fire('Error', `${error.error.message}` || 'Error Desconocido', 'error')
       }
@@ -59,18 +66,38 @@ export class ArticlesComponent implements OnInit {
   }
 
   listarPorCategoria() {
-    if(this.filtroCategoria === ''){
-    this.listarArticulos();
-    return;
-  }
+    if (this.filtroCategoria === '') {
+      this.listarArticulos();
+      return;
+    }
     this.service.buscarArticulosPorCategoria(this.filtroCategoria).subscribe({
       next: (resp) => {
         this.articulos = resp.data;
         console.log(this.articulos);
+        this.page = 1;
+        this.aplicarPaginacion();
       }, error: (error) => {
         Swal.fire('Error', `${error.error.message}` || 'Error Desconocido', 'error')
       }
     })
+  }
+  aplicarPaginacion() {
+    const inicio = (this.page - 1) * this.size;
+    const fin = inicio + this.size;
+    this.articulosFiltrados = this.articulos.slice(inicio, fin);
+    this.totalPages = Math.ceil(this.articulos.length / this.size);
+  }
+  paginaSiguiente() {
+    if (this.page < this.totalPages) {
+      this.page++;
+      this.aplicarPaginacion();
+    }
+  }
+  paginaAnterior() {
+    if (this.page > 1) {
+      this.page--;
+      this.aplicarPaginacion();
+    }
   }
 
 }

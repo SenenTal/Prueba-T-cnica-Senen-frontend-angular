@@ -47,4 +47,8 @@ export class UsuariosService {
   actualizarUsuario(usuario: UserDTO, id:number):Observable<ApiResponse<Usuarios>>{
     return this.http.put<ApiResponse<Usuarios>>(`${this.url}/${id}`, usuario);
   }
+
+  validarCredenciales(usuario: UserAccessDTO, id: number):Observable<ApiResponse<Boolean>>{
+    return this.http.post<ApiResponse<Boolean>>(`${this.url}/validar/${id}`, usuario);
+  }
 }

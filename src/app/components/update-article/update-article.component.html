@@ -17,10 +17,16 @@
                             <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event)">
                         </div>
                         <!-- Preview imagen -->
-                        <div class="text-center mb-3" *ngIf="imagenPreview">
-                            <img [src]="imageUrl + imagenPreview" class="img-thumbnail"
-                                style="width:250px;height:250px;object-fit:contain;">
+
+                        <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
+                            <img [src]="imagenPreview.startsWith('blob:') ? imagenPreview : imageUrl + imagenPreview"
+                                class="img-thumbnail" style="width:250px;height:250px;object-fit:contain;">
+                            @if(imagenFile){
+                            <button class="btn btn-danger" (click)="regresarImagen()">
+                                <i class="bi bi-arrow-counterclockwise"></i>Regresar la imagen</button>
+                            }
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Título</label>
                             <input class="form-control" [(ngModel)]="articuloU.titulo">
@@ -47,6 +53,7 @@
                                     <option value="Figuras y Coleccionables">Figuras y Coleccionables</option>
                                     <option value="Musica">Música</option>
                                     <option value="Juguetes">Juguetes</option>
+                                    <option value="Calzado">Calzado</option>
                                     <option value="Herramientas">Herramientas</option>
                                     <option value="Electronica">Electronica</option>
                                     <option value="Muebles">Muebles</option>
@@ -67,7 +74,9 @@
                             </select>
                         </div>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" [(ngModel)]="articuloU.estadoArticulo">
+                            <input class="form-check-input" type="checkbox" 
+                            [checked]="estadoDisponible"
+                            (change)="cambiarEstado($event)">
                             <label class="form-check-label">Disponible</label>
                         </div>
 

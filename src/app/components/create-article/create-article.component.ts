@@ -37,7 +37,7 @@ export class CreateArticleComponent implements OnInit {
     if (archivo) {
       this.imagen = archivo;
 
-      //mostrar preview y la imagen
+      //mostrar preview y la imagenB
       this.imagenPreview = URL.createObjectURL(archivo);
     }
   }

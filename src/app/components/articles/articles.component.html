@@ -7,13 +7,13 @@
                 <!--Buscar por titulo-->
                 <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold">Buscar por Titulo</label>
-                    <input type="text" class="form-control" placeholder="Escriba" 
-                    [(ngModel)]="filtroTitulo" (input)="listarPorTitulo()">
+                    <input type="text" class="form-control" placeholder="Escriba" [(ngModel)]="filtroTitulo"
+                        (input)="listarPorTitulo()">
                 </div>
                 <div class="col-12 col-md-4">
                     <label class="form-label fw-semibold">Categoria</label>
-                    <select class="form-select" [(ngModel)]="filtroCategoria"
-                    name="categoria" (change)="listarPorCategoria()">
+                    <select class="form-select" [(ngModel)]="filtroCategoria" name="categoria"
+                        (change)="listarPorCategoria()">
                         <option value="">Seleccione una categoría</option>
                         <option value="Autos y Transporte">Autos y Transporte</option>
                         <option value="Ropa">Ropa</option>
@@ -21,6 +21,7 @@
                         <option value="Figuras y Coleccionables">Figuras y Coleccionables</option>
                         <option value="Musica">Música</option>
                         <option value="Juguetes">Juguetes</option>
+                        <option value="Calzado">Calzado</option>
                         <option value="Herramientas">Herramientas</option>
                         <option value="Electronica">Electronica</option>
                         <option value="Muebles">Muebles</option>
@@ -30,10 +31,10 @@
             </div>
         </div>
     </div>
-    <h2 class="mb-4">Productos Disponibles</h2>
+    <h2 class="mb-4">Lista de Articulos</h2>
     <div class="row g-4">
 
-        @for(articulo of articulos; track articulo.idArticulo) {
+        @for(articulo of articulosFiltrados; track articulo.idArticulo) {
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card h-100 shadow-sm">
                 <!-- Imagen -->
@@ -84,19 +85,29 @@
                         {{articulo.fechaPublicacion | date:'dd/MM/yyyy'}}
                     </small>
 
+                    @if(articulo.estadoArticulo){
                     <button class="btn btn-primary mt-auto" (click)="verArticulo(articulo.idArticulo)">
                         Ver producto
                     </button>
-
+                    } @else {
+                    <button class="btn btn-secondary mt-auto" disabled>
+                        No disponible
+                    </button>
+                    }
                 </div>
-
             </div>
-
         </div>
-
         }
-
-
     </div>
-
+</div>
+<div class="d-flex justify-content-center gap-2 mt-4">
+    <button class="btn btn-outline-primary" (click)="paginaAnterior()" [disabled]="page === 1">
+        Anterior
+    </button>
+    <span class="align-self-center">
+        Página {{page}} de {{totalPages}}
+    </span>
+    <button class="btn btn-outline-primary" (click)="paginaSiguiente()" [disabled]="page === totalPages">
+        Siguiente
+    </button>
 </div>

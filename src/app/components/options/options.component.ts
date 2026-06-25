@@ -5,6 +5,10 @@ import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { ArticuloService } from '../../services/articulo.service';
 import { ArticulosCategoriaDTO } from '../../models/articulos/articulos-categoria.dto';
 import Swal from 'sweetalert2';
+import { ArticulosUsuariosDTO } from '../../models/articulos/articulos-usuarios.dto';
+import { VentasService } from '../../services/ventas.service';
+import { TotalDTO } from '../../models/ventas/total.dto';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-options',
@@ -22,16 +26,22 @@ export class OptionsComponent implements OnInit {
     password: ''
   };
   articulos: ArticulosCategoriaDTO[] = [];
+  articulosV: ArticulosUsuariosDTO[] = [];
+  total: number = 0;
 
   constructor(private usuariosService: UsuariosService,
     private route: ActivatedRoute,
     private articulosService: ArticuloService,
-    private router: Router) { }
+    private router: Router,
+    private ventasService: VentasService,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.obtenerCredenciales();
     this.obtenerArticulos();
+    this.obtenerArticulosVendidos();
+    this.obtenerGanancias();
   }
 
   obtenerCredenciales() {
@@ -74,6 +84,7 @@ export class OptionsComponent implements OnInit {
           subscribe({
             next: (resp) => {
               if (resp.success) {
+                this.cerrarSesion();
                 Swal.fire(
                   'Eliminado',
                   `${resp.message}`,
@@ -113,7 +124,9 @@ export class OptionsComponent implements OnInit {
         this.articulosService.eliminarArticulo(id).subscribe({
           next: (resp) => {
             Swal.fire('Borrado', `${resp.message}`, 'success');
-            return;
+            this.obtenerArticulos();
+            this.obtenerArticulosVendidos();
+            this.obtenerGanancias();
           }, error: (error) => {
             Swal.fire('Error', `${error.error.message}` || 'Error desconocido', 'error');
             return;
@@ -121,6 +134,34 @@ export class OptionsComponent implements OnInit {
         })
       }
     })
+  }
 
+  obtenerArticulosVendidos() {
+    this.articulosService.obtenerArticulosVendidosPorUsuario(this.id)
+      .subscribe({
+        next: (resp) => {
+          this.articulosV = resp.data;
+          console.log(this.articulosV);
+        }, error: (error) => {
+          console.log(`Error: ${error.error.message}`);
+        }
+      })
+  }
+
+  obtenerGanancias() {
+    this.ventasService.obtenerGananciasUsuario(this.id).
+      subscribe({
+        next: (resp) => {
+          this.total = resp.data.total;
+          console.log(this.total);
+        }, error: (error) => {
+          console.log(`Error: ${error.error.message}`)
+        }
+      })
+  }
+  cerrarSesion() {
+    this.auth.logout();
+    //Debe redirigir a otra ruta que no sea options al cerrar sesion
+    this.router.navigate(['/articulos'], { replaceUrl: true });
   }
 }
