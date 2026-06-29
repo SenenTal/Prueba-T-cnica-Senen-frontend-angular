@@ -189,7 +189,7 @@ estadoDisponible: boolean = false;
     if (this.estadoDisponible) {
       this.articuloU.estadoArticulo = true;
     } else if(!this.estadoDisponible) {
-      this.articuloU.estadoArticulo = null;
+      this.articuloU.estadoArticulo = false;
     }
   }
 
